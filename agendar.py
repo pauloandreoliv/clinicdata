@@ -1,7 +1,3 @@
-import sqlite3
-from sqlite3 import Error
-from PyQt6 import QtCore, QtGui, QtWidgets
-from time import sleep
 from config import *
 
 #Interface
