@@ -1,13 +1,9 @@
-import sqlite3
-from sqlite3 import Error
-from PyQt6 import QtCore, QtGui, QtWidgets
-from time import sleep
 from config import *
 
 #Interface
-class Ui_ClinicData(object):
-    
+class Ui_ClinicData(object):  
     def setupUi(self, ClinicData):
+
         #Define tamanho e propriedades
         ClinicData.setObjectName("ClinicData")
         ClinicData.resize(891, 678)
@@ -29,12 +25,72 @@ class Ui_ClinicData(object):
         self.logo.setPixmap(QtGui.QPixmap("midia/logo_menu.png"))
         self.logo.setObjectName("logo")
 
-        #Título
+        #Título "VER CONSULTAS EXISTENTES"
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(370, 110, 151, 16))
         self.label.setStyleSheet("color: white;")
         self.label.setObjectName("label")
+        self.label.setText("VER CONSULTAS EXISTENTES")
 
+        #Título "Insira o código do paciente:"
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(340, 640, 161, 31))
+        self.label_2.setStyleSheet("color: white;")
+        self.label_2.setObjectName("label_2")
+        self.label_2.setText("Insira o código do paciente:")
+
+        #Título "Deletado com sucesso!"
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.label_3.setFont(font)
+        self.label_3.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label_3.setStyleSheet("color: white;")
+        self.label_3.setObjectName("label_3")
+        self.label_3.setText("Deletado com sucesso!")
+
+        #Título "Editado com sucesso!"
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.label_4.setFont(font)
+        self.label_4.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label_4.setStyleSheet("color: white;")
+        self.label_4.setObjectName("label_4")
+        self.label_4.setText("Editado com sucesso!")
+
+        #Título "Você está editando"
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        self.label_5.setFont(font)
+        self.label_5.setGeometry(QtCore.QRect(80, 200, 691, 31))
+        self.label_5.setStyleSheet("color: white;")
+        self.label_5.setObjectName("label_5")
+
+        #Título "INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE"
+        self.label_6 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.label_6.setFont(font)
+        self.label_6.setGeometry(QtCore.QRect(80, 135, 350, 31))
+        self.label_6.setStyleSheet("color: white; background: transparent;")
+        self.label_6.setObjectName("label_6")
+        self.label_6.setText("INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE:")
+
+        #Linha de edição - Barra de pesquisa
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(80, 160, 681, 31))
+        self.lineEdit.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
+        self.lineEdit.setObjectName("lineEdit")
+
+        #Linha de edição - Caixa para colocar o código do paciente
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_2.setGeometry(QtCore.QRect(510, 640, 251, 31))
+        self.lineEdit_2.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        
         #Área de rolagem
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setGeometry(QtCore.QRect(80, 240, 741, 391))
@@ -49,6 +105,10 @@ class Ui_ClinicData(object):
         self.tableWidget = QtWidgets.QTableWidget(self.scrollAreaWidgetContents)
         self.tableWidget.setGeometry(QtCore.QRect(0, 0, 741, 391))
         self.tableWidget.setObjectName("tableWidget")
+
+        #Função nada
+        def funcao_nada():
+            return
 
         #Função que mostra a tabela
         def funcao_tabela():
@@ -68,19 +128,6 @@ class Ui_ClinicData(object):
                 cont += 1
                 
         funcao_tabela()
-
-        #Função nada
-        def funcao_nada():
-            return
-
-        #Função que pega o nome do paciente e coloca na variável nome
-        def funcao_pega_nome():
-            linha_ = self.tableWidget.currentItem().row()
-            nome = str(self.tableWidget.item(linha_,1).text())
-            self.label_5.setText(f"Você está configurando {nome}")
-        
-        #Botão que chama a função pega_nome
-        self.tableWidget.itemClicked.connect(lambda: funcao_pega_nome())
 
         #Títulos das colunas
         item = QtWidgets.QTableWidgetItem()
@@ -111,11 +158,14 @@ class Ui_ClinicData(object):
         self.tableWidget.setHorizontalHeaderItem(12, item)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
-        #Barra de pesquisa
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(80, 160, 681, 31))
-        self.lineEdit.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
-        self.lineEdit.setObjectName("lineEdit")
+        #Função que pega o nome do paciente e coloca na variável nome
+        def funcao_pega_nome():
+            linha_ = self.tableWidget.currentItem().row()
+            nome = str(self.tableWidget.item(linha_,1).text())
+            self.label_5.setText(f"Você está configurando {nome}")
+        
+        #Botão que chama a função pega_nome
+        self.tableWidget.itemClicked.connect(lambda: funcao_pega_nome())
 
         #Função de pesquisa
         def funcao_pesquisar():
@@ -194,30 +244,6 @@ class Ui_ClinicData(object):
         self.pesquisar.setObjectName("pesquisar")
         self.pesquisar.clicked.connect(funcao_pesquisar)
 
-        #Enviar e-mail
-        self.enviar = QtWidgets.QPushButton(self.centralwidget)
-        self.enviar.setGeometry(QtCore.QRect(770, 640, 51, 31))
-        self.enviar.setStyleSheet("border:none; background: white; border-radius: 10px;")
-        self.enviar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("midia/email.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.enviar.setIcon(icon1)
-        self.enviar.setIconSize(QtCore.QSize(25, 25))
-        self.enviar.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
-        self.enviar.setObjectName("enviar")
-
-        #Caixa para colocar o código do paciente
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_2.setGeometry(QtCore.QRect(510, 640, 251, 31))
-        self.lineEdit_2.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
-        self.lineEdit_2.setObjectName("lineEdit_2")
-
-        #Título
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(340, 640, 161, 31))
-        self.label_2.setStyleSheet("color: white;")
-        self.label_2.setObjectName("label_2")
-
         #Função editar para editar item específico
         def funcao_editar():
             self.label_5.setText("")
@@ -262,17 +288,6 @@ class Ui_ClinicData(object):
         self.enviar_2.setObjectName("enviar_2")
         self.enviar_2.clicked.connect(funcao_editar)
 
-        #Botão para baixar planilha
-        self.pesquisar_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pesquisar_2.setGeometry(QtCore.QRect(770, 200, 51, 31))
-        self.pesquisar_2.setStyleSheet("border:none;")
-        self.pesquisar_2.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("midia/download.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.pesquisar_2.setIcon(icon3)
-        self.pesquisar_2.setIconSize(QtCore.QSize(25, 25))
-        self.pesquisar_2.setObjectName("pesquisar_2")
-
         #Função de exclusão de um item específico
         def funcao_excluir():
             self.label_5.setText("")
@@ -293,7 +308,7 @@ class Ui_ClinicData(object):
                 funcao_nada()
             
 
-        #Botão para excluir
+        #Botão para ativar a função de exclusão
         self.enviar_3 = QtWidgets.QPushButton(self.centralwidget)
         self.enviar_3.setGeometry(QtCore.QRect(150, 640, 51, 31))
         self.enviar_3.setStyleSheet("border:none; background: white; border-radius: 10px;")
@@ -305,57 +320,37 @@ class Ui_ClinicData(object):
         self.enviar_3.clicked.connect(funcao_excluir)
         self.enviar_3.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.enviar_3.setObjectName("enviar_3")
+
+        #Botão para enviar e-mail
+        self.enviar = QtWidgets.QPushButton(self.centralwidget)
+        self.enviar.setGeometry(QtCore.QRect(770, 640, 51, 31))
+        self.enviar.setStyleSheet("border:none; background: white; border-radius: 10px;")
+        self.enviar.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("midia/email.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.enviar.setIcon(icon1)
+        self.enviar.setIconSize(QtCore.QSize(25, 25))
+        self.enviar.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.enviar.setObjectName("enviar")
         
-        self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(False)
-        self.label_3.setFont(font)
-        self.label_3.setGeometry(QtCore.QRect(0, 0, 0, 0))
-        self.label_3.setStyleSheet("color: white;")
-        self.label_3.setObjectName("label_3")
-
-        self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(False)
-        self.label_4.setFont(font)
-        self.label_4.setGeometry(QtCore.QRect(0, 0, 0, 0))
-        self.label_4.setStyleSheet("color: white;")
-        self.label_4.setObjectName("label_4")
-
-        #Título "Você está editando"
-        self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(True)
-        self.label_5.setFont(font)
-        self.label_5.setGeometry(QtCore.QRect(80, 200, 691, 31))
-        self.label_5.setStyleSheet("color: white;")
-        self.label_5.setObjectName("label_5")
-
-        #Título "INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE"
-        self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(False)
-        self.label_6.setFont(font)
-        self.label_6.setGeometry(QtCore.QRect(80, 135, 350, 31))
-        self.label_6.setStyleSheet("color: white; background: transparent;")
-        self.label_6.setObjectName("label_6")
-        self.label_6.setText("INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE:")
+        #Botão para baixar planilha
+        self.pesquisar_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pesquisar_2.setGeometry(QtCore.QRect(770, 200, 51, 31))
+        self.pesquisar_2.setStyleSheet("border:none;")
+        self.pesquisar_2.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("midia/download.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.pesquisar_2.setIcon(icon3)
+        self.pesquisar_2.setIconSize(QtCore.QSize(25, 25))
+        self.pesquisar_2.setObjectName("pesquisar_2")
         
         ClinicData.setCentralWidget(self.centralwidget)
         self.retranslateUi(ClinicData)
         QtCore.QMetaObject.connectSlotsByName(ClinicData)
 
+    #Função padrão - Insere títulos das colunas
     def retranslateUi(self, ClinicData):
         _translate = QtCore.QCoreApplication.translate
-        ClinicData.setWindowTitle(_translate("ClinicData", "Nova consulta"))
-        self.label.setText(_translate("ClinicData", "VER CONSULTAS EXISTENTES"))
-        self.label_2.setText(_translate("ClinicData", "Insira o código do paciente:"))
-        self.label_3.setText(_translate("ClinicData", "Deletado com sucesso!"))
-        self.label_4.setText(_translate("ClinicData", "Editado com sucesso!"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("ClinicData", "PAGO"))
         item = self.tableWidget.horizontalHeaderItem(1)
@@ -383,7 +378,7 @@ class Ui_ClinicData(object):
         item = self.tableWidget.horizontalHeaderItem(12)
         item.setText(_translate("ClinicData", "ID:"))
 
-#Final
+#Final - Padrão PyQt
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
