@@ -33,13 +33,6 @@ class Ui_ClinicData(object):
         self.label.setObjectName("label")
         self.label.setText("VER CONSULTAS EXISTENTES")
 
-        #Título "Insira o código do paciente:"
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(340, 640, 161, 31))
-        self.label_2.setStyleSheet("color: white;")
-        self.label_2.setObjectName("label_2")
-        self.label_2.setText("Insira o código do paciente:")
-
         #Título "Deletado com sucesso!"
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
@@ -91,6 +84,7 @@ class Ui_ClinicData(object):
         self.lineEdit_2.setGeometry(QtCore.QRect(510, 640, 251, 31))
         self.lineEdit_2.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
         self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_2.setEnabled(False)
         
         #Área de rolagem
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
@@ -116,13 +110,13 @@ class Ui_ClinicData(object):
             manipulador.execute('SELECT * FROM consultas_db ORDER BY id')
             lista_ = list(manipulador.fetchall())
             self.tableWidget.insertRow
-            self.tableWidget.setColumnCount(13)
+            self.tableWidget.setColumnCount(14)
             linhas = len(lista_)
             self.tableWidget.setRowCount(linhas)
             cont = 0
             while cont < linhas:
                 cont2 = 0
-                while cont2 < 13:
+                while cont2 < 14:
                     self.tableWidget.setItem(cont, cont2, QtWidgets.QTableWidgetItem(str(lista_[cont][cont2])))
                     #Linha, coluna, Item
                     cont2 += 1
@@ -130,7 +124,7 @@ class Ui_ClinicData(object):
                 
         funcao_tabela()
 
-        #Títulos das colunas
+        #Colunas
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -157,6 +151,8 @@ class Ui_ClinicData(object):
         self.tableWidget.setHorizontalHeaderItem(11, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(12, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(13, item)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
         #Função que pega o nome do paciente e coloca na variável nome
@@ -202,7 +198,7 @@ class Ui_ClinicData(object):
                     cont = 0
                     while cont < len(outros):
                         cont2 = 0
-                        while cont2 < 13:
+                        while cont2 < 14:
                             self.tableWidget.setItem(cont, cont2, QtWidgets.QTableWidgetItem(str(outros[cont][cont2])))
                             #Linha, coluna, Item
                             cont2 += 1
@@ -224,7 +220,7 @@ class Ui_ClinicData(object):
                     cont = 0
                     while cont < len(outros):
                         cont2 = 0
-                        while cont2 < 13:
+                        while cont2 < 14:
                             self.tableWidget.setItem(cont, cont2, QtWidgets.QTableWidgetItem(str(outros[cont][cont2])))
                             #Linha, coluna, Item
                             cont2 += 1
@@ -258,18 +254,18 @@ class Ui_ClinicData(object):
                     codigo_ = self.tableWidget.item(linha_tb,2).text()
                     responsavel_ = self.tableWidget.item(linha_tb,3).text().upper()
                     profissional_ = self.tableWidget.item(linha_tb,4).text().upper()
-                    data_ = self.tableWidget.item(linha_tb,5).text()
-                    celular_ = self.tableWidget.item(linha_tb,6).text()
-                    valor_ = self.tableWidget.item(linha_tb,7).text()
-                    email_ = self.tableWidget.item(linha_tb,8).text()
-                    laudo_ = self.tableWidget.item(linha_tb,9).text()
-                    endereco_ = str(self.tableWidget.item(linha_tb,10).text())
-                    observacoes_ = self.tableWidget.item(linha_tb,11).text()
-                    id_ = int(self.tableWidget.item(linha_tb,12).text())
+                    horario_ = self.tableWidget.item(linha_tb,5).text().upper()
+                    data_ = self.tableWidget.item(linha_tb,6).text()
+                    celular_ = self.tableWidget.item(linha_tb,7).text()
+                    valor_ = self.tableWidget.item(linha_tb,8).text()
+                    laudo_ = self.tableWidget.item(linha_tb,10).text()
+                    endereco_ = str(self.tableWidget.item(linha_tb,11).text())
+                    observacoes_ = self.tableWidget.item(linha_tb,12).text()
+                    id_ = int(self.tableWidget.item(linha_tb,13).text())
                     import sqlite3
                     from sqlite3 import Error
                     from config import conexao, manipulador
-                    manipulador.execute(f"UPDATE consultas_db SET pago = '{pago_}', paciente = '{paciente_}', codigo = '{codigo_}', responsavel = '{responsavel_}', profissional_r = '{profissional_}', data = '{data_}', celular = '{celular_}', valor = '{valor_}', email = '{email_}', laudo = '{laudo_}', endereco = '{endereco_}', observacoes = '{observacoes_}' WHERE id = {id_}")
+                    manipulador.execute(f"UPDATE consultas_db SET pago = '{pago_}', paciente = '{paciente_}', codigo = '{codigo_}', responsavel = '{responsavel_}', profissional_r = '{profissional_}', horario = '{horario_}', data = '{data_}', celular = '{celular_}', valor = '{valor_}', laudo = '{laudo_}', endereco = '{endereco_}', observacoes = '{observacoes_}' WHERE id = {id_}")
                     conexao.commit()
                     self.label_3.setGeometry(QtCore.QRect(0, 0, 0, 0))
                     self.label_4.setGeometry(QtCore.QRect(210, 640, 121, 31))
@@ -297,7 +293,7 @@ class Ui_ClinicData(object):
                 if linha_tb != None:
                     linha_tb = self.tableWidget.currentItem().row()
                     linha_tb = int(linha_tb)
-                    id_ = int(self.tableWidget.item(linha_tb,12).text())
+                    id_ = int(self.tableWidget.item(linha_tb,13).text())
                     import sqlite3
                     from sqlite3 import Error
                     from config import conexao, manipulador
@@ -339,6 +335,16 @@ class Ui_ClinicData(object):
                         email_do_paciente = str(lista[0]).lower()
                         email_do_paciente = f"{email_do_paciente}"
                         nome_do_paciente = str(lista[1]).upper()
+                        conexao.commit()
+
+                        manipulador.execute(f"SELECT * FROM clinica_db")
+                        dados_ = list(manipulador.fetchone())
+                        nome = dados_[0]
+                        endereco = dados_[1]
+
+                        profissional = str(self.tableWidget.item(linha_tb,4).text())
+                        horario = str(self.tableWidget.item(linha_tb,5).text())
+                        data = str(self.tableWidget.item(linha_tb,6).text())
                         
                         from email.mime.multipart import MIMEMultipart as formatodoemail
                         from email.mime.text import MIMEText as textodoemail
@@ -356,15 +362,15 @@ class Ui_ClinicData(object):
 
                         </div><div style="text-align: center;max-width: 520px;">
                         <h1>Olá, {nome_do_paciente}!</h1>
-                        <h2 style="font-size: 20px;">Você está lembrado da sua consulta no dia <div style="display: inline-block;color: #4a66a2;text-decoration: underline;">29/06/2022</div>?</h2>
+                        <h2 style="font-size: 20px;">Você está lembrado da sua consulta no dia <div style="display: inline-block;color: #4a66a2;text-decoration: underline;">{data}</div>?</h2>
                         <div style="border: 1px solid silver;padding: 10px;border-radius: 10px;">
                         <div style="border-bottom: 1px solid silver;">
 
-                        <div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;">Endereço:<div style="display: inline;font-weight: bold;margin-left: 5px;">Rua da Aurora, s/n, Recife, Pernambuco. Próximo ao Casarão Amarelo.</div></div></div>
-                        <div style="border-bottom: 1px solid silver;"><div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;"> Horário: <div style="display: inline;font-weight: bold;margin-left: 5px;">15:17</div></div>
+                        <div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;">Endereço:<div style="display: inline;font-weight: bold;margin-left: 5px;">{endereco}</div></div></div>
+                        <div style="border-bottom: 1px solid silver;"><div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;"> Horário: <div style="display: inline;font-weight: bold;margin-left: 5px;">{horario}</div></div>
 
                         </div>
-                        <div style=""><div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;">Profissional:<div style="display: inline;font-weight: bold;margin-left: 5px;">Dr. Teste da Silva</div></div>
+                        <div style=""><div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;">Profissional:<div style="display: inline;font-weight: bold;margin-left: 5px;">{profissional}</div></div>
 
                         </div>
                         </div>
@@ -374,7 +380,7 @@ class Ui_ClinicData(object):
 
                         <p>Em caso de cancelamento, adiamento ou dúvidas entre em contato conosco pelos nossos canais de comunicação o mais rápido possível!</p>
                         <p>Nós agradecemos pela compreensão :)</p>
-                        <p>Equipe ClinicData</p><p style="font-size: 12px;margin-top: 50px;color: silver;">EMAIL ENVIADO AUTOMATICAMENTE, POR FAVOR, NÃO RESPONDER</p></div>
+                        <p>Equipe {nome}</p><p style="font-size: 12px;margin-top: 50px;color: silver;">EMAIL ENVIADO AUTOMATICAMENTE, POR FAVOR, NÃO RESPONDER</p></div>
                         </body>
                         """
                         mensagem['Subject'] = "AVISO - ClinicData" #Assunto do e-mail
@@ -390,6 +396,7 @@ class Ui_ClinicData(object):
             else:
                 self.lineEdit_2.setText("Não foi possível enviar o e-mail.")
                 funcao_nada()
+
 
         #Botão para enviar e-mail
         self.enviar = QtWidgets.QPushButton(self.centralwidget)
@@ -433,20 +440,22 @@ class Ui_ClinicData(object):
         item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("ClinicData", "PROFISSIONAL"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("ClinicData", "DATA"))
+        item.setText(_translate("ClinicData", "HORÁRIO"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("ClinicData", "CELULAR"))
+        item.setText(_translate("ClinicData", "DATA"))
         item = self.tableWidget.horizontalHeaderItem(7)
-        item.setText(_translate("ClinicData", "VALOR"))
+        item.setText(_translate("ClinicData", "CELULAR"))
         item = self.tableWidget.horizontalHeaderItem(8)
-        item.setText(_translate("ClinicData", "E-MAIL"))
+        item.setText(_translate("ClinicData", "VALOR"))
         item = self.tableWidget.horizontalHeaderItem(9)
-        item.setText(_translate("ClinicData", "LAUDO"))
+        item.setText(_translate("ClinicData", "E-MAIL"))
         item = self.tableWidget.horizontalHeaderItem(10)
-        item.setText(_translate("ClinicData", "ENDEREÇO:"))
+        item.setText(_translate("ClinicData", "LAUDO"))
         item = self.tableWidget.horizontalHeaderItem(11)
-        item.setText(_translate("ClinicData", "OBSERVAÇÕES:"))
+        item.setText(_translate("ClinicData", "ENDEREÇO:"))
         item = self.tableWidget.horizontalHeaderItem(12)
+        item.setText(_translate("ClinicData", "OBSERVAÇÕES:"))
+        item = self.tableWidget.horizontalHeaderItem(13)
         item.setText(_translate("ClinicData", "ID:"))
 
 #Final - Padrão PyQt
