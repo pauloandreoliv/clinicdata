@@ -341,6 +341,11 @@ class Ui_ClinicData(object):
                         dados_ = list(manipulador.fetchone())
                         nome = dados_[0]
                         endereco = dados_[1]
+                        ddd = dados_[2]
+                        whatsapp = dados_[3]
+                        contato = dados_[4]
+                        email_ = dados_[5]
+                        senha_ = dados_[6]
 
                         profissional = str(self.tableWidget.item(linha_tb,4).text())
                         horario = str(self.tableWidget.item(linha_tb,5).text())
@@ -352,7 +357,7 @@ class Ui_ClinicData(object):
 
                         conectar = smtplib.SMTP("smtp-mail.outlook.com",587) #Conecta ao servidor
                         conectar.starttls() #Transporte layer security
-                        conectar.login("naoresponda_clinicdata@outlook.com", "clinicdata00_") #Realiza o login
+                        conectar.login(f"{email_}", f"{senha_}") #Realiza o login
 
                         mensagem = formatodoemail()
                         HTML = f"""
@@ -376,18 +381,18 @@ class Ui_ClinicData(object):
                         </div>
 
 
-                        <div style="font-size: 15px;color: #4b69a8;margin-top: 20px;">WhatsApp: (81) 90000-0000</div><div style="font-size: 15px;color: #4b69a8;margin-top: 20px;">E-mail: naoresponda_clinicdata@outlook.com</div>
+                        <div style="font-size: 15px;color: #4b69a8;margin-top: 20px;">WhatsApp: ({ddd}) {whatsapp}</div><div style="font-size: 15px;color: #4b69a8;margin-top: 20px;">E-mail: {contato}</div>
 
                         <p>Em caso de cancelamento, adiamento ou dúvidas entre em contato conosco pelos nossos canais de comunicação o mais rápido possível!</p>
                         <p>Nós agradecemos pela compreensão :)</p>
-                        <p>Equipe {nome}</p><p style="font-size: 12px;margin-top: 50px;color: silver;">EMAIL ENVIADO AUTOMATICAMENTE, POR FAVOR, NÃO RESPONDER</p></div>
+                        <p>Equipe {nome}</p><p style="font-size: 12px;margin-top: 50px;color: silver;">E-MAIL ENVIADO AUTOMATICAMENTE, POR FAVOR, NÃO RESPONDER</p></div>
                         </body>
                         """
                         mensagem['Subject'] = "AVISO - ClinicData" #Assunto do e-mail
                         mensagem.attach(textodoemail(HTML,'html')) #Conteúdo do texto//Lê em formato HTML
                         texto = mensagem.as_string() #Coloca como string
 
-                        conectar.sendmail("naoresponda_clinicdata@outlook.com",email_do_paciente,texto) #Envia o e-mail
+                        conectar.sendmail("{email_}",email_do_paciente,texto) #Envia o e-mail
                         conectar.close()
                         self.lineEdit_2.setText(f"E-mail enviado com sucesso.")
                     except:
