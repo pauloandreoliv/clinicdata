@@ -362,10 +362,12 @@ class Ui_ClinicData(object):
                         mensagem = formatodoemail()
                         HTML = f"""
                         <body>
-                        <div style="width: 520px; height:200px; background-color: #77a2ff;">
-                        <div style="background-image: url(https://i.imgur.com/M7CHpDz.png); width: 294px; height: 85px;margin-top: 40px;margin-left: 110px;position: absolute;"></div><p style="color: white;text-align: center;font-size: 14px;padding-top: 25px;font-weight: bold;letter-spacing: 10px;">AVISO</p>
-
-                        </div><div style="text-align: center;max-width: 520px;">
+                        <div style="height:200px;">
+                        <center>
+                        <div style="background-image: url(https://i.imgur.com/9xFUPqn.png); width: 294px; height: 85px;margin-top: 40px;margin-left:-12px;"></div></center>
+                        <p style="color: #2887bf;text-align: center;font-size: 14px;padding-top: 25px;font-weight: bold;letter-spacing: 10px;">AVISO</p>
+                        </div>
+                        <div style="text-align: center;">
                         <h1>Olá, {nome_do_paciente}!</h1>
                         <h2 style="font-size: 20px;">Você está lembrado da sua consulta no dia <div style="display: inline-block;color: #4a66a2;text-decoration: underline;">{data}</div>?</h2>
                         <div style="border: 1px solid silver;padding: 10px;border-radius: 10px;">
