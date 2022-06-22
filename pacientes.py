@@ -1,24 +1,23 @@
 from config import *
 
 #Interface
-class Ui_Pacientes(object):
-    def setupUi(self, Pacientes):
+class Ui_ClinicData(object):
+    def setupUi(self, ClinicData):
         
         #Define o tamanho
-        Pacientes.setObjectName("Pacientes")
-        Pacientes.setWindowTitle("Visualizar pacientes")
-        Pacientes.resize(891, 678)
+        ClinicData.setObjectName("ClinicData")
+        ClinicData.setWindowTitle("Visualizar pacientes")
+        ClinicData.resize(891, 678)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Pacientes.sizePolicy().hasHeightForWidth())
-        Pacientes.setSizePolicy(sizePolicy)
-        Pacientes.setMinimumSize(QtCore.QSize(891, 0))
-        Pacientes.setMaximumSize(QtCore.QSize(891, 678))
-        Pacientes.setStyleSheet("background-color:rgb(119, 162, 255);")
-        self.centralwidget = QtWidgets.QWidget(Pacientes)
+        sizePolicy.setHeightForWidth(ClinicData.sizePolicy().hasHeightForWidth())
+        ClinicData.setSizePolicy(sizePolicy)
+        ClinicData.setMinimumSize(QtCore.QSize(891, 0))
+        ClinicData.setMaximumSize(QtCore.QSize(891, 678))
+        ClinicData.setStyleSheet("background-color:rgb(119, 162, 255);")
+        self.centralwidget = QtWidgets.QWidget(ClinicData)
         self.centralwidget.setObjectName("centralwidget")
-
 
         #Logo
         self.logo = QtWidgets.QLabel(self.centralwidget)
@@ -26,14 +25,59 @@ class Ui_Pacientes(object):
         self.logo.setPixmap(QtGui.QPixmap("midia/logo_menu.png"))
         self.logo.setObjectName("logo")
 
-
         #Título
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(370, 110, 151, 16))
         self.label.setStyleSheet("color: white;")
         self.label.setObjectName("label")
+        
+        #Título "Deletado com sucesso"
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(False)
+        self.label_3.setFont(font)
+        self.label_3.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label_3.setStyleSheet("color: white;")
+        self.label_3.setObjectName("label_3")
 
+        #Título "Editado com sucesso"
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(False)
+        self.label_4.setFont(font)
+        self.label_4.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label_4.setStyleSheet("color: white;")
+        self.label_4.setObjectName("label_4")
 
+        #Título "Você está configurando"
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        self.label_5.setFont(font)
+        self.label_5.setGeometry(QtCore.QRect(80, 200, 691, 31))
+        self.label_5.setStyleSheet("color: white;")
+        self.label_5.setObjectName("label_5")
+
+        #Título "INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE"
+        self.label_6 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(False)
+        self.label_6.setFont(font)
+        self.label_6.setGeometry(QtCore.QRect(80, 135, 350, 31))
+        self.label_6.setStyleSheet("color: white; background: transparent;")
+        self.label_6.setObjectName("label_6")
+        self.label_6.setText("INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE:")
+
+        #Caixa de pesquisa
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(80, 160, 681, 31))
+        self.lineEdit.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
+        self.lineEdit.setObjectName("lineEdit")
+        
         #Área de rolagem
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setGeometry(QtCore.QRect(80, 240, 741, 391))
@@ -43,7 +87,6 @@ class Ui_Pacientes(object):
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 741, 391))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-
 
         #Tabela
         self.tableWidget = QtWidgets.QTableWidget(self.scrollAreaWidgetContents)
@@ -112,14 +155,6 @@ class Ui_Pacientes(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(12, item)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-
-
-        #Caixa de pesquisa
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(80, 160, 681, 31))
-        self.lineEdit.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
-        self.lineEdit.setObjectName("lineEdit")
-
 
         #Função pesquisar - Seleciona o dado da base de dados que possui o valor (nome completo ou código) pesquisado
         def funcao_pesquisar():
@@ -287,95 +322,52 @@ class Ui_Pacientes(object):
         self.enviar_3.clicked.connect(funcao_excluir)
         self.enviar_3.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.enviar_3.setObjectName("enviar_3")
-
-
-        #Título "Deletado com sucesso"
-        self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(False)
-        self.label_3.setFont(font)
-        self.label_3.setGeometry(QtCore.QRect(0, 0, 0, 0))
-        self.label_3.setStyleSheet("color: white;")
-        self.label_3.setObjectName("label_3")
-
-
-        #Título "Editado com sucesso"
-        self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(False)
-        self.label_4.setFont(font)
-        self.label_4.setGeometry(QtCore.QRect(0, 0, 0, 0))
-        self.label_4.setStyleSheet("color: white;")
-        self.label_4.setObjectName("label_4")
-
-        #Título "Você está configurando"
-        self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(True)
-        self.label_5.setFont(font)
-        self.label_5.setGeometry(QtCore.QRect(80, 200, 691, 31))
-        self.label_5.setStyleSheet("color: white;")
-        self.label_5.setObjectName("label_5")
-
-        #Título "INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE"
-        self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        font.setBold(False)
-        self.label_6.setFont(font)
-        self.label_6.setGeometry(QtCore.QRect(80, 135, 350, 31))
-        self.label_6.setStyleSheet("color: white; background: transparent;")
-        self.label_6.setObjectName("label_6")
-        self.label_6.setText("INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE:")
         
         #Finalizando conteúdos do objeto
-        Pacientes.setCentralWidget(self.centralwidget)
-        self.retranslateUi(Pacientes)
-        QtCore.QMetaObject.connectSlotsByName(Pacientes)
+        ClinicData.setCentralWidget(self.centralwidget)
+        self.retranslateUi(ClinicData)
+        QtCore.QMetaObject.connectSlotsByName(ClinicData)
 
     #Insere os textos nas labels, nomes das colunas da tabela e título da janela
-    def retranslateUi(self, Pacientes):
+    def retranslateUi(self, ClinicData):
         _translate = QtCore.QCoreApplication.translate
-        self.label.setText(_translate("Pacientes", "VER PACIENTES EXISTENTES"))
-        self.label_3.setText(_translate("Pacientes", "Deletado com sucesso!"))
-        self.label_4.setText(_translate("Pacientes", "Editado com sucesso!"))
+        self.label.setText(_translate("ClinicData", "VER PACIENTES EXISTENTES"))
+        self.label_3.setText(_translate("ClinicData", "Deletado com sucesso!"))
+        self.label_4.setText(_translate("ClinicData", "Editado com sucesso!"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("Pacientes", "FREQUÊNCIA"))
+        item.setText(_translate("ClinicData", "FREQUÊNCIA"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Pacientes", "PACIENTE"))
+        item.setText(_translate("ClinicData", "PACIENTE"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("Pacientes", "CÓDIGO"))
+        item.setText(_translate("ClinicData", "CÓDIGO"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("Pacientes", "RESPONSÁVEL"))
+        item.setText(_translate("ClinicData", "RESPONSÁVEL"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("Pacientes", "OBSERVAÇÕES"))
+        item.setText(_translate("ClinicData", "OBSERVAÇÕES"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("Pacientes", "E-MAIL"))
+        item.setText(_translate("ClinicData", "E-MAIL"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("Pacientes", "CELULAR"))
+        item.setText(_translate("ClinicData", "CELULAR"))
         item = self.tableWidget.horizontalHeaderItem(7)
-        item.setText(_translate("Pacientes", "LAUDO"))
+        item.setText(_translate("ClinicData", "LAUDO"))
         item = self.tableWidget.horizontalHeaderItem(8)
-        item.setText(_translate("Pacientes", "ENDEREÇO"))
+        item.setText(_translate("ClinicData", "ENDEREÇO"))
         item = self.tableWidget.horizontalHeaderItem(9)
-        item.setText(_translate("Pacientes", "PROFISSIONAL"))
+        item.setText(_translate("ClinicData", "PROFISSIONAL"))
         item = self.tableWidget.horizontalHeaderItem(10)
-        item.setText(_translate("Pacientes", "CPF"))
+        item.setText(_translate("ClinicData", "CPF"))
         item = self.tableWidget.horizontalHeaderItem(11)
-        item.setText(_translate("Pacientes", "NASCIMENTO"))
+        item.setText(_translate("ClinicData", "NASCIMENTO"))
         item = self.tableWidget.horizontalHeaderItem(12)
-        item.setText(_translate("Pacientes", "ID"))
+        item.setText(_translate("ClinicData", "ID"))
 
 #Final
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Pacientes = QtWidgets.QMainWindow()
-    ui = Ui_Pacientes()
-    ui.setupUi(Pacientes)
-    Pacientes.show() #Mostra a janela
+    ClinicData = QtWidgets.QMainWindow()
+    ui = Ui_ClinicData()
+    ui.setupUi(ClinicData)
+    ClinicData.show() #Mostra a janela
     sys.exit(app.exec())
     conexao.close() #Encerra a conexão do SQLite
