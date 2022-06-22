@@ -364,7 +364,7 @@ class Ui_ClinicData(object):
                         <body>
                         <div style="height:200px;">
                         <center>
-                        <div style="background-image: url(https://i.imgur.com/9xFUPqn.png); width: 294px; height: 85px;margin-top: 40px;margin-left:-12px;"></div></center>
+                        <div style="background-image: url(https://i.imgur.com/9xFUPqn.png); width: 294px; height: 85px;margin-top: 40px;margin-left:-15px;"></div></center>
                         <p style="color: #2887bf;text-align: center;font-size: 14px;padding-top: 25px;font-weight: bold;letter-spacing: 10px;">AVISO</p>
                         </div>
                         <div style="text-align: center;">
