@@ -390,7 +390,7 @@ class Ui_ClinicData(object):
                         <p>Equipe {nome}</p><p style="font-size: 12px;margin-top: 50px;color: silver;">E-MAIL ENVIADO AUTOMATICAMENTE. POR FAVOR, NÃO RESPONDER</p></div>
                         </body>
                         """
-                        mensagem['Subject'] = "AVISO - ClinicData" #Assunto do e-mail
+                        mensagem['Subject'] = f"AVISO - {nome}" #Assunto do e-mail
                         mensagem.attach(textodoemail(HTML,'html')) #Conteúdo do texto//Lê em formato HTML
                         texto = mensagem.as_string() #Coloca como string
 
