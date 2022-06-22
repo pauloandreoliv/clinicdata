@@ -385,14 +385,14 @@ class Ui_ClinicData(object):
 
                         <p>Em caso de cancelamento, adiamento ou dúvidas entre em contato conosco pelos nossos canais de comunicação o mais rápido possível!</p>
                         <p>Nós agradecemos pela compreensão :)</p>
-                        <p>Equipe {nome}</p><p style="font-size: 12px;margin-top: 50px;color: silver;">E-MAIL ENVIADO AUTOMATICAMENTE, POR FAVOR, NÃO RESPONDER</p></div>
+                        <p>Equipe {nome}</p><p style="font-size: 12px;margin-top: 50px;color: silver;">E-MAIL ENVIADO AUTOMATICAMENTE. POR FAVOR, NÃO RESPONDER</p></div>
                         </body>
                         """
                         mensagem['Subject'] = "AVISO - ClinicData" #Assunto do e-mail
                         mensagem.attach(textodoemail(HTML,'html')) #Conteúdo do texto//Lê em formato HTML
                         texto = mensagem.as_string() #Coloca como string
 
-                        conectar.sendmail("{email_}",email_do_paciente,texto) #Envia o e-mail
+                        conectar.sendmail(f"{email_}",email_do_paciente,texto) #Envia o e-mail
                         conectar.close()
                         self.lineEdit_2.setText(f"E-mail enviado com sucesso.")
                     except:
