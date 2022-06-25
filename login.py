@@ -108,8 +108,8 @@ class Ui_ClinicData(object):
         #Função que chama a função de logar, ou seja, a funcao_true    
         def funcao_login():
             #Define os parâmetros para a função funcao_true
-            user = self.caixa_usuario.text()
-            password = self.caixa_senha.text()
+            user = str(self.caixa_usuario.text()).lower()
+            password = str(self.caixa_senha.text())
             funcao_true(user,password)
             
         #Botão de login
