@@ -19,7 +19,7 @@ class Ui_ClinicData(object):
         ClinicData.setMinimumSize(QtCore.QSize(891, 0))
         ClinicData.setMaximumSize(QtCore.QSize(891, 678))
         ClinicData.setStyleSheet("background-color:rgb(119, 162, 255);")
-        ClinicData.setWindowTitle("Nova consulta")
+        ClinicData.setWindowTitle("Novo administrador")
         self.centralwidget = QtWidgets.QWidget(ClinicData)
         self.centralwidget.setObjectName("centralwidget")
 
