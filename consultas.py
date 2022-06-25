@@ -315,10 +315,25 @@ class Ui_ClinicData(object):
                 if linha_tb != None:
                     linha_tb = self.tableWidget.currentItem().row()
                     linha_tb = int(linha_tb)
+                    pago_ = self.tableWidget.item(linha_tb,0).text().upper()
+                    paciente_ = self.tableWidget.item(linha_tb,1).text().upper()
+                    codigo_ = self.tableWidget.item(linha_tb,2).text()
+                    responsavel_ = self.tableWidget.item(linha_tb,3).text().upper()
+                    profissional_ = self.tableWidget.item(linha_tb,4).text().upper()
+                    horario_ = self.tableWidget.item(linha_tb,5).text().upper()
+                    data_ = self.tableWidget.item(linha_tb,6).text()
+                    celular_ = self.tableWidget.item(linha_tb,7).text()
+                    valor_ = self.tableWidget.item(linha_tb,8).text()
+                    email_ = self.tableWidget.item(linha_tb,9).text()
+                    laudo_ = self.tableWidget.item(linha_tb,10).text()
+                    endereco_ = str(self.tableWidget.item(linha_tb,11).text())
+                    observacoes_ = self.tableWidget.item(linha_tb,12).text()
                     id_ = int(self.tableWidget.item(linha_tb,13).text())
                     import sqlite3
                     from sqlite3 import Error
                     from config import conexao, manipulador
+                    manipulador.execute(f"INSERT INTO historico_db (pago, paciente, codigo, responsavel, profissional_r, horario, data, celular, valor, email, laudo, endereco, observacoes) VALUES ('{pago_}', '{paciente_}', '{codigo_}', '{responsavel_}', '{profissional_}', '{horario_}', '{data_}', '{celular_}', '{valor_}', '{email_}', '{laudo_}', '{endereco_}', '{observacoes_}')")
+                    conexao.commit()
                     manipulador.execute(f"DELETE FROM consultas_db WHERE id = {id_}")
                     conexao.commit()
                     self.label_4.setGeometry(QtCore.QRect(0, 0, 0, 0))
