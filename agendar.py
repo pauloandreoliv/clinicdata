@@ -127,6 +127,7 @@ class Ui_ClinicData(object):
         self.label_14.setStyleSheet("color: white;")
         self.label_14.setObjectName("label_14")
         self.label_14.setText("DATA:")
+
         
         #Título
         self.label_15 = QtWidgets.QLabel(self.centralwidget)
@@ -148,6 +149,13 @@ class Ui_ClinicData(object):
         self.label_17.setStyleSheet("color: white;")
         self.label_17.setObjectName("label_17")
         self.label_17.setText("Preencha o nome do paciente.")
+
+        #Título
+        self.label_18 = QtWidgets.QLabel(self.centralwidget)
+        self.label_18.setGeometry(QtCore.QRect(450, 570, 101, 31))
+        self.label_18.setStyleSheet("color: white;")
+        self.label_18.setObjectName("label_18")
+        self.label_18.setText("HORA:")
         
         #Linha de edição
         self.lineEdit_6 = QtWidgets.QLineEdit(self.centralwidget)
@@ -176,7 +184,7 @@ class Ui_ClinicData(object):
 
         #Linha de edição
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(200, 150, 521, 31))
+        self.lineEdit.setGeometry(QtCore.QRect(200, 150, 581, 31))
         self.lineEdit.setStyleSheet("background-color: white; border-radius: 10px; color: black;")
         self.lineEdit.setObjectName("lineEdit")
         
@@ -211,6 +219,12 @@ class Ui_ClinicData(object):
         self.lineEdit_9.setText("")
         self.lineEdit_9.setObjectName("lineEdit_9")
 
+        #Linha de edição
+        self.lineEdit_10 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_10.setGeometry(QtCore.QRect(570,570, 211, 31))
+        self.lineEdit_10.setStyleSheet("background-color: white; border-radius: 10px; color: black;")
+        self.lineEdit_10.setObjectName("lineEdit_10")
+        
         #Selecionar data
         self.dateTimeEdit = QtWidgets.QDateTimeEdit(self.centralwidget)
         self.dateTimeEdit.setGeometry(QtCore.QRect(570, 520, 211, 31))
@@ -272,6 +286,7 @@ class Ui_ClinicData(object):
             self.lineEdit_7.setText("")
             self.lineEdit_8.setText("")
             self.lineEdit_9.setText("")
+            self.lineEdit_10.setText("")
             self.textEdit.setText("")
             self.nao.setChecked(True)
             self.lineEdit.setStyleSheet("background-color: white; border-radius: 10px; color: black;")
@@ -307,6 +322,7 @@ class Ui_ClinicData(object):
                 observacoes = str(self.textEdit.toPlainText()).upper()
                 valor = str(self.lineEdit_9.text()).upper()
                 data = self.dateTimeEdit.date().toPyDate()
+                horario = str(self.lineEdit_10.text())
                 pago = ''
                 if self.sim.isChecked() == True:
                     pago = 'SIM'
@@ -314,30 +330,19 @@ class Ui_ClinicData(object):
                     pago = 'NÃO'
                 if self.lineEdit.text() == '':
                     self.label_16.setGeometry(QtCore.QRect(0, 0, 0, 0))
-                    self.label_17.setGeometry(QtCore.QRect(590, 586, 181, 20))
+                    self.label_17.setGeometry(QtCore.QRect(590, 600, 181, 20))
                     self.label_9.setGeometry(QtCore.QRect(210, 130, 351, 16))
                     self.lineEdit.setStyleSheet('border-radius: 10px; color: black; background-color: rgb(255, 199, 200);')
                 else:
                     self.label_17.setGeometry(QtCore.QRect(0, 0, 0, 0))
                     self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
-                    manipulador.execute(f"INSERT INTO consultas_db (pago, paciente, codigo, responsavel, profissional_r, data, celular, valor, email, laudo, endereco, observacoes) VALUES ('{pago}', '{paciente}', '{codigo}', '{responsavel}', '{profissional}', '{data}', '{celular}', '{valor}', '{email}', '{laudo}', '{endereco}', '{observacoes}')")
+                    manipulador.execute(f"INSERT INTO consultas_db (pago, paciente, codigo, responsavel, profissional_r, data, celular, valor, email, laudo, endereco, observacoes, horario) VALUES ('{pago}', '{paciente}', '{codigo}', '{responsavel}', '{profissional}', '{data}', '{celular}', '{valor}', '{email}', '{laudo}', '{endereco}', '{observacoes}', '{horario}')")
                     conexao.commit()
                     self.lineEdit.setStyleSheet("background-color: white; border-radius: 10px; color: black;")
-                    self.label_16.setGeometry(QtCore.QRect(590, 586, 181, 20))
+                    self.label_16.setGeometry(QtCore.QRect(590, 600, 181, 20))
             else:
                 self.label_9.setGeometry(QtCore.QRect(210, 130, 351, 16))
                 self.lineEdit.setStyleSheet('border-radius: 10px; color: black; background-color: rgb(255, 199, 200);')
-
-        #Botão para procurar paciente
-        self.procurar_paciente = QtWidgets.QPushButton(self.centralwidget)
-        self.procurar_paciente.setGeometry(QtCore.QRect(730, 150, 51, 31))
-        self.procurar_paciente.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
-        self.procurar_paciente.setStyleSheet("border:none; background: white; border-radius: 10px;")
-        self.procurar_paciente.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("midia/lupa.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.procurar_paciente.setIcon(icon)
-        self.procurar_paciente.setObjectName("procurar_paciente")
         
         #Botão para ativar a função de procurar pelo código
         self.procurar_codigo = QtWidgets.QPushButton(self.centralwidget)
@@ -345,6 +350,8 @@ class Ui_ClinicData(object):
         self.procurar_codigo.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.procurar_codigo.setStyleSheet("border:none; background: white; border-radius: 10px;")
         self.procurar_codigo.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("midia/lupa.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.procurar_codigo.setIcon(icon)
         self.procurar_codigo.setObjectName("procurar_codigo")
         self.procurar_codigo.clicked.connect(funcao_procurar_codigo)
