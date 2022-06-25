@@ -85,6 +85,28 @@ class Ui_ClinicData(object):
         self.lineEdit_2.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_2.setEnabled(False)
+
+
+        #Função para abrir o menu
+        def funcao_abrir_menu():
+            from principal import Ui_Menu
+            self.clinicdata = QtWidgets.QMainWindow()
+            self.ClinicData = Ui_Menu()
+            self.ClinicData.setupUi(self.clinicdata)
+            sleep(1)
+            self.clinicdata.show()
+        
+        #Botão para ativar a função de abrir o menu
+        self.abrir_menu = QtWidgets.QPushButton(self.centralwidget)
+        self.abrir_menu.setGeometry(QtCore.QRect(80, 90, 51, 31))
+        self.abrir_menu.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.abrir_menu.setStyleSheet("border:none; background: white; border-radius: 10px; color:rgb(119, 162, 255);")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("midia/menu.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.abrir_menu.setIcon(icon1)
+        self.abrir_menu.setIconSize(QtCore.QSize(30, 30))
+        self.abrir_menu.setObjectName("abrir_menu")
+        self.abrir_menu.clicked.connect(funcao_abrir_menu)
         
         #Área de rolagem
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
@@ -369,7 +391,7 @@ class Ui_ClinicData(object):
                         </div>
                         <div style="text-align: center;">
                         <h1>Olá, {nome_do_paciente}!</h1>
-                        <h2 style="font-size: 20px;">Você está lembrado da sua consulta no dia <div style="display: inline-block;color: #4a66a2;text-decoration: underline;">{data}</div>?</h2>
+                        <h2 style="font-size: 20px;">Você está lembrado(a) da sua consulta no dia <div style="display: inline-block;color: #4a66a2;text-decoration: underline;">{data}</div>?</h2>
                         <div style="border: 1px solid silver;padding: 10px;border-radius: 10px;">
                         <div style="border-bottom: 1px solid silver;">
 
