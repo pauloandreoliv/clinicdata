@@ -142,6 +142,16 @@ class Ui_Menu(object):
         self.item_4.clicked.connect(quarto_item)
 
 
+
+        #Quarto item do menu
+        def quarto_item():
+                from novoadministrador import Ui_ClinicData
+                self.clinicdata = QtWidgets.QMainWindow()
+                self.ClinicData = Ui_ClinicData()
+                self.ClinicData.setupUi(self.clinicdata)
+                self.clinicdata.show()
+                sleep(1)
+                Menu.hide()
         #Novo administrador
         self.item_5 = QtWidgets.QPushButton(self.centralwidget)
         self.item_5.setGeometry(QtCore.QRect(40, 340, 141, 31))
@@ -153,7 +163,19 @@ class Ui_Menu(object):
         self.item_5.setStyleSheet("background-color: white; border-radius: 10px;")
         self.item_5.setObjectName("item_5")
         self.item_5.setText("Novo administrador")
+        self.item_5.clicked.connect(quarto_item)
 
+
+
+        #Quinto item do menu
+        def quinto_item():
+                from administradores import Ui_ClinicData
+                self.clinicdata = QtWidgets.QMainWindow()
+                self.ClinicData = Ui_ClinicData()
+                self.ClinicData.setupUi(self.clinicdata)
+                self.clinicdata.show()
+                sleep(1)
+                Menu.hide()
         #Administradores
         self.item_6 = QtWidgets.QPushButton(self.centralwidget)
         self.item_6.setGeometry(QtCore.QRect(40, 380, 141, 31))
@@ -165,6 +187,8 @@ class Ui_Menu(object):
         self.item_6.setStyleSheet("background-color: white; border-radius: 10px;")
         self.item_6.setObjectName("item_6")
         self.item_6.setText("Administradores")
+        self.item_6.clicked.connect(quinto_item)
+
         
         Menu.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(Menu)
