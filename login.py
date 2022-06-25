@@ -95,13 +95,13 @@ class Ui_ClinicData(object):
             if (nome__ == True and senha__ == True) and mostrar == mostre:
                 #Esconde o erro de login, caso esteja visível
                 self.label.setGeometry(QtCore.QRect(0, 0, 0, 0))
-                from principal import Ui_JMenu
+                from principal import Ui_Menu
                 from time import sleep
                 #Chama a janela do menu, código do final do arquivo principal.py
-                self.janela = QtWidgets.QMainWindow()
-                self.jmenu = Ui_JMenu()
-                self.jmenu.setupUi(self.janela)
-                self.janela.show()
+                self.ClinicData = QtWidgets.QMainWindow()
+                self.clinicdata = Ui_Menu()
+                self.clinicdata.setupUi(self.ClinicData)
+                self.ClinicData.show()
                 sleep(1)
                 ClinicData.hide()
                 
