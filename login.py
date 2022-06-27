@@ -14,6 +14,7 @@ class Ui_ClinicData(object):
         ClinicData.setSizePolicy(sizePolicy)
         ClinicData.setMaximumSize(QtCore.QSize(640, 500))
         ClinicData.setStyleSheet("background-color:rgb(119, 162, 255);")
+        ClinicData.setWindowTitle("ClinicData - Login")
         self.centralwidget = QtWidgets.QWidget(ClinicData)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -23,7 +24,41 @@ class Ui_ClinicData(object):
         self.centralwidget.setMinimumSize(QtCore.QSize(640, 437))
         self.centralwidget.setMaximumSize(QtCore.QSize(640, 437))
         self.centralwidget.setObjectName("centralwidget")
+
+        #Logo
+        self.logo_login = QtWidgets.QLabel(self.centralwidget)
+        self.logo_login.setGeometry(QtCore.QRect(170, 50, 311, 91))
+        self.logo_login.setText("")
+        self.logo_login.setPixmap(QtGui.QPixmap("midia/logo_.png"))
+        self.logo_login.setObjectName("logo_login")
+
+        #Texto "Usuário"
+        self.texto_usuario = QtWidgets.QLabel(self.centralwidget)
+        self.texto_usuario.setGeometry(QtCore.QRect(230, 179, 61, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.texto_usuario.setFont(font)
+        self.texto_usuario.setStyleSheet("color:white;")
+        self.texto_usuario.setObjectName("texto_usuario")
+        self.texto_usuario.setText("USUÁRIO:")
+
+        #Texto "Senha"
+        self.texto_senha = QtWidgets.QLabel(self.centralwidget)
+        self.texto_senha.setGeometry(QtCore.QRect(230, 270, 61, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.texto_senha.setFont(font)
+        self.texto_senha.setStyleSheet("color:white;")
+        self.texto_senha.setObjectName("texto_senha")
+        self.texto_senha.setText("SENHA:")
         
+        #Titulo - "Usuário ou senha incorretos."
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label.setStyleSheet("")
+        self.label.setObjectName("label")
+        self.label.setText("Usuário ou senha incorretos.")
+
         #Input do usuário
         self.caixa_usuario = QtWidgets.QLineEdit(self.centralwidget)
         self.caixa_usuario.setGeometry(QtCore.QRect(230, 210, 181, 41))
@@ -47,12 +82,6 @@ class Ui_ClinicData(object):
         self.caixa_senha.setText("")
         self.caixa_senha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.caixa_senha.setObjectName("caixa_senha")
-
-        #Titulo 1
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(0, 0, 0, 0))
-        self.label.setStyleSheet("")
-        self.label.setObjectName("label")
         
         #Define a função de login
         def funcao_true(user,password):
@@ -129,43 +158,10 @@ class Ui_ClinicData(object):
         self.enviar.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.enviar.clicked.connect(funcao_login)
 
-        #Logo
-        self.logo_login = QtWidgets.QLabel(self.centralwidget)
-        self.logo_login.setGeometry(QtCore.QRect(170, 50, 311, 91))
-        self.logo_login.setText("")
-        self.logo_login.setPixmap(QtGui.QPixmap("midia/logo_.png"))
-        self.logo_login.setObjectName("logo_login")
-
-        #Texto "Usuário"
-        self.texto_usuario = QtWidgets.QLabel(self.centralwidget)
-        self.texto_usuario.setGeometry(QtCore.QRect(230, 179, 61, 16))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.texto_usuario.setFont(font)
-        self.texto_usuario.setStyleSheet("color:white;")
-        self.texto_usuario.setObjectName("texto_usuario")
-
-        #Texto "Senha"
-        self.texto_senha = QtWidgets.QLabel(self.centralwidget)
-        self.texto_senha.setGeometry(QtCore.QRect(230, 270, 61, 16))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.texto_senha.setFont(font)
-        self.texto_senha.setStyleSheet("color:white;")
-        self.texto_senha.setObjectName("texto_senha")
-        
         ClinicData.setCentralWidget(self.centralwidget)
-        self.retranslateUi(ClinicData)
         QtCore.QMetaObject.connectSlotsByName(ClinicData)
 
-    #Insere os textos das labels e o título da janela
-    def retranslateUi(self, ClinicData):
-        _translate = QtCore.QCoreApplication.translate
-        ClinicData.setWindowTitle(_translate("ClinicData", "ClinicData - Login"))
-        self.texto_usuario.setText(_translate("ClinicData", "USUÁRIO:"))
-        self.texto_senha.setText(_translate("ClinicData", "SENHA:"))
-        self.label.setText(_translate("ClinicData", "Usuário ou senha incorretos."))
-        
+#Final - Padrão PyQt       
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
