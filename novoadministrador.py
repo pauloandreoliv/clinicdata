@@ -147,7 +147,7 @@ class Ui_ClinicData(object):
                 for k in lista:
                     for n in k:
                         lista_usuarios.append(n)
-                usuario_ = str(self.lineEdit.text()).lower()
+                usuario_ = str(self.lineEdit_2.text()).lower()
                 if usuario_ in lista_usuarios:
                     self.label_16.setGeometry(QtCore.QRect(0, 0, 0, 0))
                     self.label_17.setGeometry(QtCore.QRect(0, 0, 0, 0))
