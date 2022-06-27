@@ -15,7 +15,7 @@ class Ui_Menu(object):
         Menu.setMinimumSize(QtCore.QSize(220, 0))
         Menu.setMaximumSize(QtCore.QSize(220, 500))
         Menu.setStyleSheet("background-color:rgb(119, 162, 255);")
-        Menu.setWindowTitle("Menu - Janela principal")
+        Menu.setWindowTitle("Menu")
         self.centralwidget = QtWidgets.QWidget(Menu)
         self.centralwidget.setMaximumSize(QtCore.QSize(220, 500))
         self.centralwidget.setStyleSheet("")
@@ -188,6 +188,29 @@ class Ui_Menu(object):
         self.item_6.setObjectName("item_6")
         self.item_6.setText("Administradores")
         self.item_6.clicked.connect(quinto_item)
+
+
+        #Sexto item do menu
+        def sexto_item():
+                from ajustes import Ui_ClinicData
+                self.clinicdata = QtWidgets.QMainWindow()
+                self.ClinicData = Ui_ClinicData()
+                self.ClinicData.setupUi(self.clinicdata)
+                self.clinicdata.show()
+                sleep(1)
+                Menu.hide()
+        #Ajustes
+        self.item_7 = QtWidgets.QPushButton(self.centralwidget)
+        self.item_7.setGeometry(QtCore.QRect(40, 420, 141, 31))
+        font = QtGui.QFont()
+        font.setKerning(True)
+        self.item_7.setFont(font)
+        self.item_7.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.item_7.setMouseTracking(False)
+        self.item_7.setStyleSheet("background-color: white; border-radius: 10px;")
+        self.item_7.setObjectName("item_7")
+        self.item_7.setText("Ajustes")
+        self.item_7.clicked.connect(sexto_item)
 
         
         Menu.setCentralWidget(self.centralwidget)
