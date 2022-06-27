@@ -79,9 +79,9 @@ class Ui_ClinicData(object):
         self.lineEdit.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
         self.lineEdit.setObjectName("lineEdit")
 
-        #Linha de edição - Caixa para colocar o código do paciente
+        #Linha de edição - Caixa para mostrar status de envio do e-mail
         self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_2.setGeometry(QtCore.QRect(510, 640, 251, 31))
+        self.lineEdit_2.setGeometry(QtCore.QRect(449, 640, 251, 31))
         self.lineEdit_2.setStyleSheet("background-color: white; border: none; border-radius: 2px;")
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_2.setEnabled(False)
@@ -444,16 +444,114 @@ class Ui_ClinicData(object):
 
         #Botão para enviar e-mail
         self.enviar = QtWidgets.QPushButton(self.centralwidget)
-        self.enviar.setGeometry(QtCore.QRect(770, 640, 51, 31))
+        self.enviar.setGeometry(QtCore.QRect(709, 640, 51, 31))
         self.enviar.setStyleSheet("border:none; background: white; border-radius: 10px;")
         self.enviar.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("midia/email.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.enviar.setIcon(icon1)
-        self.enviar.setIconSize(QtCore.QSize(25, 25))
+        self.enviar.setIconSize(QtCore.QSize(23, 23))
         self.enviar.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.enviar.setObjectName("enviar")
         self.enviar.clicked.connect(lambda: funcao_enviar_email())
+        
+        #Função para enviar e-mail (cancelamento)
+        def funcao_enviar_email_cancelamento():
+            self.lineEdit_2.setText("")
+            if int(self.tableWidget.rowCount())!=0 and int(self.tableWidget.columnCount())!=0:
+                linha_tb = self.tableWidget.currentItem()
+                if linha_tb != None:
+                    linha_tb = self.tableWidget.currentItem().row()
+                    linha_tb = int(linha_tb)
+                    o_item = self.tableWidget.item(linha_tb,2).text()
+                    qual_o_codigo = o_item
+                    try:
+                        manipulador.execute(f"SELECT email, paciente FROM pacientes_db WHERE codigo = '{qual_o_codigo}'")
+                        lista = list(manipulador.fetchone())
+                        email_do_paciente = str(lista[0]).lower()
+                        email_do_paciente = f"{email_do_paciente}"
+                        nome_do_paciente = str(lista[1]).upper()
+                        conexao.commit()
+
+                        manipulador.execute(f"SELECT * FROM clinica_db")
+                        dados_ = list(manipulador.fetchone())
+                        nome = dados_[0]
+                        endereco = dados_[1]
+                        ddd = dados_[2]
+                        whatsapp = dados_[3]
+                        contato = dados_[4]
+                        email_ = dados_[5]
+                        senha_ = dados_[6]
+
+                        profissional = str(self.tableWidget.item(linha_tb,4).text())
+                        horario = str(self.tableWidget.item(linha_tb,5).text())
+                        data = str(self.tableWidget.item(linha_tb,6).text())
+                        
+                        from email.mime.multipart import MIMEMultipart as formatodoemail
+                        from email.mime.text import MIMEText as textodoemail
+                        import smtplib
+
+                        conectar = smtplib.SMTP("smtp-mail.outlook.com",587) #Conecta ao servidor
+                        conectar.starttls() #Transporte layer security
+                        conectar.login(f"{email_}", f"{senha_}") #Realiza o login
+
+                        mensagem = formatodoemail()
+                        HTML = f"""
+                        <body>
+                        <div style="height:200px;">
+                        <center>
+                        <div style="background-image: url(https://i.imgur.com/9xFUPqn.png); width: 294px; height: 85px;margin-top: 40px;margin-left:-25px;"></div></center>
+                        <p style="color: #2887bf;text-align: center;font-size: 14px;padding-top: 25px;font-weight: bold;letter-spacing: 10px;">AVISO</p>
+                        </div>
+                        <div style="text-align: center;">
+                        <h1>Olá, {nome_do_paciente}!</h1>
+                        <h2 style="font-size: 20px;">Infelizmente a sua consulta do dia <div style="display: inline-block;color: #4a66a2;text-decoration: underline;">{data}</div> precisou ser <div style="display: inline-block;color: red;">cancelada</div>.</h2>
+                        <div style="border: 1px solid silver;padding: 10px;border-radius: 10px;">
+                        <div style="border-bottom: 1px solid silver;">
+
+                        <div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;">Endereço:<div style="display: inline;font-weight: bold;margin-left: 5px;">{endereco}</div></div></div>
+                        <div style="border-bottom: 1px solid silver;"><div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;"> Horário: <div style="display: inline;font-weight: bold;margin-left: 5px;">{horario}</div></div>
+
+                        </div>
+                        <div style=""><div style="text-align: left;padding: 15px;margin-left: 50px;max-width: 392px;word-break: break-word;">Profissional:<div style="display: inline;font-weight: bold;margin-left: 5px;">{profissional}</div></div>
+
+                        </div>
+                        </div>
+
+
+                        <div style="font-size: 15px;color: #4b69a8;margin-top: 20px;">WhatsApp: ({ddd}) {whatsapp}</div><div style="font-size: 15px;color: #4b69a8;margin-top: 20px;">E-mail: {contato}</div>
+
+                        <p>Em caso de dúvidas ou reagendamento entre em contato conosco pelos nossos canais de comunicação.</p>
+                        <p>Nós agradecemos pela compreensão :)</p>
+                        <p>Equipe {nome}</p><p style="font-size: 12px;margin-top: 50px;color: silver;">E-MAIL ENVIADO AUTOMATICAMENTE. POR FAVOR, NÃO RESPONDER</p></div>
+                        </body>
+                        """
+                        mensagem['Subject'] = f"AVISO - {nome}" #Assunto do e-mail
+                        mensagem.attach(textodoemail(HTML,'html')) #Conteúdo do texto//Lê em formato HTML
+                        texto = mensagem.as_string() #Coloca como string
+
+                        conectar.sendmail(f"{email_}",email_do_paciente,texto) #Envia o e-mail
+                        conectar.close()
+                        self.lineEdit_2.setText(f"E-mail enviado com sucesso.")
+                    except:
+                        self.lineEdit_2.setText("Não foi possível enviar o e-mail.")
+                        funcao_nada()
+            else:
+                self.lineEdit_2.setText("Não foi possível enviar o e-mail.")
+                funcao_nada()
+
+        #Botão para enviar e-mail (cancelamento)
+        self.enviar_c = QtWidgets.QPushButton(self.centralwidget)
+        self.enviar_c.setGeometry(QtCore.QRect(770, 640, 51, 31))
+        self.enviar_c.setStyleSheet("border:none; background: white; border-radius: 10px;")
+        self.enviar_c.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("midia/cancelamento.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.enviar_c.setIcon(icon2)
+        self.enviar_c.setIconSize(QtCore.QSize(30, 30))
+        self.enviar_c.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.enviar_c.setObjectName("enviar_c")
+        self.enviar_c.clicked.connect(lambda: funcao_enviar_email_cancelamento())
         
         #Botão para baixar planilha
         self.pesquisar_2 = QtWidgets.QPushButton(self.centralwidget)
