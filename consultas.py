@@ -614,12 +614,14 @@ class Ui_ClinicData(object):
                                         cont2 += 1
                                     folha.append(linha)#Adiciona a linha na tabela
                                     cont += 1
-                                    
-                            numero = 0
-                            for k in range(0,len(listdir(pasta_clinicdata))):
-                                nome = str("consultas" + "(" + str(numero) + ")" + ".xlsx")
-                                if nome in listdir(pasta_clinicdata):
-                                    numero +=1
+                            if listdir(pasta_clinicdata) == [] or "consultas.xlsx" not in listdir(pasta_clinicdata):
+                                nome = "consultas.xlsx"
+                            else:        
+                                numero = 0
+                                for k in range(0,len(listdir(pasta_clinicdata))):
+                                    nome = str("consultas" + "(" + str(numero) + ")" + ".xlsx")
+                                    if nome in listdir(pasta_clinicdata):
+                                        numero +=1
                             planilha.save(pasta_clinicdata + "\\" + nome)#Salva a planilha na pasta
                             self.label_9.setGeometry(QtCore.QRect(500, 200, 350, 31))
                         else:
