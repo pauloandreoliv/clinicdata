@@ -587,7 +587,7 @@ class Ui_ClinicData(object):
 
         #Função para baixar planilha
         def baixar_planilha():
-            from os import sep, path, mkdir
+            from os import sep, path, mkdir, listdir
             if str(sep + " ") == str('\ '):
                 try:
                     pasta = path.join(path.expanduser("~\Documents"))
@@ -603,6 +603,7 @@ class Ui_ClinicData(object):
                             planilha.create_sheet(index = 0, title = "Dados")
                             folha = planilha.active
                             folha.append(['PAGO','PACIENTE','CÓDIGO','RESPONSÁVEL','PROFISSIONAL','HORÁRIO','DATA','CELULAR','VALOR','E-MAIL','LAUDO','ENDEREÇO','OBSERVAÇÕES','ID'])
+
                             cont = 0
                             while cont < int(self.tableWidget.rowCount()):
                                     cont2 = 0
@@ -613,7 +614,13 @@ class Ui_ClinicData(object):
                                         cont2 += 1
                                     folha.append(linha)#Adiciona a linha na tabela
                                     cont += 1
-                            planilha.save(pasta_clinicdata + "\\consultas.xlsx")#Salva a planilha na pasta
+                                    
+                            numero = 0
+                            for k in range(0,len(listdir(pasta_clinicdata))):
+                                nome = str("consultas" + "(" + str(numero) + ")" + ".xlsx")
+                                if nome in listdir(pasta_clinicdata):
+                                    numero +=1
+                            planilha.save(pasta_clinicdata + "\\" + nome)#Salva a planilha na pasta
                             self.label_9.setGeometry(QtCore.QRect(500, 200, 350, 31))
                         else:
                             self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
