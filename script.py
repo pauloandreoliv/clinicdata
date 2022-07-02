@@ -1,14 +1,12 @@
 from os import *
-if str(sep + "") == str('\ '):
+if str(sep + " ") == str('\ '):
     pasta = path.join(path.expanduser("~\Documents"))
-    print(pasta)
     pasta_existe = path.exists(pasta)
-    print(pasta_existe)
-    pasta_clinicdata = pasta = path.join(path.expanduser("~\Documents\Planilhas - ClinicData"))
     if pasta_existe == True:
-        try:
-            pass
-        except:
-            pass
+        pasta_clinicdata = path.join(path.expanduser("~\Documents\\Planilhas - ClinicData"))
+        pasta_clinicdata_existe = path.exists(pasta_clinicdata)
+        if pasta_clinicdata_existe == False:
+            mkdir(pasta_clinicdata)
+        
 else:
     print('Apenas Windows')
