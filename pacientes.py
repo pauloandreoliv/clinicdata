@@ -72,6 +72,36 @@ class Ui_ClinicData(object):
         self.label_6.setObjectName("label_6")
         self.label_6.setText("INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE:")
 
+        #Título "BAIXAR PLANILHA ÉPOSSÍVEL APENAS NO WINDOWS"
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.label_7.setFont(font)
+        self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label_7.setStyleSheet("color: white; background: rgb(119, 162, 255);")
+        self.label_7.setObjectName("label_7")
+        self.label_7.setText("BAIXAR PLANILHA É POSSÍVEL APENAS NO WINDOWS")
+
+        #Título "ERRO AO BAIXAR A PLANILHA"
+        self.label_8 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.label_8.setFont(font)
+        self.label_8.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label_8.setStyleSheet("color: white; background: rgb(119, 162, 255);")
+        self.label_8.setObjectName("label_8")
+        self.label_8.setText("ERRO AO BAIXAR A PLANILHA")
+
+        #Título "PLANILHA BAIXADA COM SUCESSO"
+        self.label_9 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.label_9.setFont(font)
+        self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        self.label_9.setStyleSheet("color: white; background: rgb(119, 162, 255);")
+        self.label_9.setObjectName("label_9")
+        self.label_9.setText("PLANILHA BAIXADA COM SUCESSO")        
+
         #Caixa de pesquisa
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(80, 160, 681, 31))
@@ -143,6 +173,9 @@ class Ui_ClinicData(object):
         def funcao_pega_nome():
             linha_ = self.tableWidget.currentItem().row()
             nome = str(self.tableWidget.item(linha_,1).text())
+            self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
+            self.label_8.setGeometry(QtCore.QRect(0, 0, 0, 0))
+            self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
             self.label_5.setText(f"Você está configurando {nome}")
         
         #Botão que chama a função  
@@ -299,7 +332,59 @@ class Ui_ClinicData(object):
         self.enviar_2.clicked.connect(funcao_editar)
 
 
-        #Botão para gerar e salvar planilha no Excel
+        #Função para baixar planilha
+        def baixar_planilha():
+            from os import sep, path, mkdir, listdir
+            if str(sep + " ") == str('\ '):
+                try:
+                    pasta = path.join(path.expanduser("~\Documents"))
+                    pasta_existe = path.exists(pasta)
+                    if pasta_existe == True:
+                        pasta_clinicdata = path.join(path.expanduser("~\Documents\\Planilhas - ClinicData"))
+                        pasta_clinicdata_existe = path.exists(pasta_clinicdata)#Verifica se a pasta existe
+                        if pasta_clinicdata_existe == False:
+                            mkdir(pasta_clinicdata)#Caso a pasta não exista, cria a pasta
+                        from openpyxl import Workbook
+                        if int(self.tableWidget.rowCount())!=0 and int(self.tableWidget.columnCount())!=0:
+                            planilha = Workbook()
+                            planilha.create_sheet(index = 0, title = "Dados")
+                            folha = planilha.active
+                            folha.append(['FREQUÊNCIA','PACIENTE','CÓDIGO','RESPONSÁVEL','OBSERVAÇÕES','E-MAIL','CELULAR','LAUDO','ENDEREÇO','PROFISSIONAL','CPF','NASCIMENTO','ID'])
+
+                            cont = 0
+                            while cont < int(self.tableWidget.rowCount()):
+                                    cont2 = 0
+                                    linha = []
+                                    while cont2 < int(self.tableWidget.columnCount()):
+                                        linha.append(self.tableWidget.item(cont, cont2).text())
+                                        #Linha, coluna, Item
+                                        cont2 += 1
+                                    folha.append(linha)#Adiciona a linha na tabela
+                                    cont += 1
+                            if listdir(pasta_clinicdata) == [] or "pacientes.xlsx" not in listdir(pasta_clinicdata):
+                                nome = "pacientes.xlsx"
+                            else:
+                                numero = 0
+                                for k in range(0,len(listdir(pasta_clinicdata))):
+                                    nome = str("pacientes" + "(" + str(numero) + ")" + ".xlsx")
+                                    if nome in listdir(pasta_clinicdata):
+                                        numero +=1
+                            planilha.save(pasta_clinicdata + "\\" + nome)#Salva a planilha na pasta
+                            self.label_9.setGeometry(QtCore.QRect(500, 200, 350, 31))
+                        else:
+                            self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
+                            self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
+                            self.label_8.setGeometry(QtCore.QRect(500, 200, 350, 31))
+                except:
+                    self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
+                    self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
+                    self.label_8.setGeometry(QtCore.QRect(500, 200, 350, 31))
+            else:
+                self.label_8.setGeometry(QtCore.QRect(0, 0, 0, 0))
+                self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
+                self.label_7.setGeometry(QtCore.QRect(500, 200, 350, 31))
+            
+        #Botão para baixar planilha
         self.pesquisar_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pesquisar_2.setGeometry(QtCore.QRect(770, 200, 51, 31))
         self.pesquisar_2.setStyleSheet("border:none;")
@@ -308,7 +393,9 @@ class Ui_ClinicData(object):
         icon3.addPixmap(QtGui.QPixmap("midia/download.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.pesquisar_2.setIcon(icon3)
         self.pesquisar_2.setIconSize(QtCore.QSize(25, 25))
+        self.pesquisar_2.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.pesquisar_2.setObjectName("pesquisar_2")
+        self.pesquisar_2.clicked.connect(lambda: baixar_planilha())
 
 
         #Função de exclusão de um item específico
@@ -356,7 +443,7 @@ class Ui_ClinicData(object):
         self.label_3.setText(_translate("ClinicData", "Deletado com sucesso!"))
         self.label_4.setText(_translate("ClinicData", "Editado com sucesso!"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("ClinicData", "FREQUÊNCIA"))
+        item.setText(_translate("ClinicData", "FREQUÊNCIA")) 
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("ClinicData", "PACIENTE"))
         item = self.tableWidget.horizontalHeaderItem(2)
