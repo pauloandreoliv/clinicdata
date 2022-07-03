@@ -600,8 +600,8 @@ class Ui_ClinicData(object):
                         from openpyxl import Workbook
                         if int(self.tableWidget.rowCount())!=0 and int(self.tableWidget.columnCount())!=0:
                             planilha = Workbook()
-                            planilha.create_sheet(index = 0, title = "Dados")
-                            folha = planilha.active
+                            planilha.create_sheet(index = 0, title = "Consultas")
+                            folha = planilha["Consultas"]
                             folha.append(['PAGO','PACIENTE','CÓDIGO','RESPONSÁVEL','PROFISSIONAL','HORÁRIO','DATA','CELULAR','VALOR','E-MAIL','LAUDO','ENDEREÇO','OBSERVAÇÕES','ID'])
 
                             cont = 0
@@ -617,7 +617,7 @@ class Ui_ClinicData(object):
                             if listdir(pasta_clinicdata) == [] or "consultas.xlsx" not in listdir(pasta_clinicdata):
                                 nome = "consultas.xlsx"
                             else:        
-                                numero = 0
+                                numero = 1
                                 for k in range(0,len(listdir(pasta_clinicdata))):
                                     nome = str("consultas" + "(" + str(numero) + ")" + ".xlsx")
                                     if nome in listdir(pasta_clinicdata):
