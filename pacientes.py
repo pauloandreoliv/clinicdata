@@ -72,16 +72,6 @@ class Ui_ClinicData(object):
         self.label_6.setObjectName("label_6")
         self.label_6.setText("INSIRA O NOME COMPLETO OU O CÓDIGO DO PACIENTE:")
 
-        #Título "BAIXAR PLANILHA ÉPOSSÍVEL APENAS NO WINDOWS"
-        self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.label_7.setFont(font)
-        self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
-        self.label_7.setStyleSheet("color: white; background: rgb(119, 162, 255);")
-        self.label_7.setObjectName("label_7")
-        self.label_7.setText("BAIXAR PLANILHA É POSSÍVEL APENAS NO WINDOWS")
-
         #Título "ERRO AO BAIXAR A PLANILHA"
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
@@ -173,7 +163,6 @@ class Ui_ClinicData(object):
         def funcao_pega_nome():
             linha_ = self.tableWidget.currentItem().row()
             nome = str(self.tableWidget.item(linha_,1).text())
-            self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
             self.label_8.setGeometry(QtCore.QRect(0, 0, 0, 0))
             self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
             self.label_5.setText(f"Você está configurando {nome}")
@@ -334,16 +323,7 @@ class Ui_ClinicData(object):
 
         #Função para baixar planilha
         def baixar_planilha():
-            from os import sep, path, mkdir, listdir
-            if str(sep + " ") == str('\ '):
                 try:
-                    pasta = path.join(path.expanduser("~\Documents"))
-                    pasta_existe = path.exists(pasta)
-                    if pasta_existe == True:
-                        pasta_clinicdata = path.join(path.expanduser("~\Documents\\Planilhas - ClinicData"))
-                        pasta_clinicdata_existe = path.exists(pasta_clinicdata)#Verifica se a pasta existe
-                        if pasta_clinicdata_existe == False:
-                            mkdir(pasta_clinicdata)#Caso a pasta não exista, cria a pasta
                         from openpyxl import Workbook
                         if int(self.tableWidget.rowCount())!=0 and int(self.tableWidget.columnCount())!=0:
                             planilha = Workbook()
@@ -361,29 +341,38 @@ class Ui_ClinicData(object):
                                         cont2 += 1
                                     folha.append(linha)#Adiciona a linha na tabela
                                     cont += 1
-                            if listdir(pasta_clinicdata) == [] or "pacientes.xlsx" not in listdir(pasta_clinicdata):
-                                nome = "pacientes.xlsx"
-                            else:
-                                numero = 1
-                                for k in range(0,len(listdir(pasta_clinicdata))):
-                                    nome = str("pacientes" + "(" + str(numero) + ")" + ".xlsx")
-                                    if nome in listdir(pasta_clinicdata):
-                                        numero +=1
-                            planilha.save(pasta_clinicdata + "\\" + nome)#Salva a planilha na pasta
-                            self.label_9.setGeometry(QtCore.QRect(500, 200, 350, 31))
+
+                            from os import sep, path, mkdir, listdir
+                            if str(sep + " ") == str('\ '): #Para salvar caso seja Windows
+                                pasta = path.join(path.expanduser("~\Documents"))
+                                pasta_existe = path.exists(pasta)
+                                if pasta_existe == True:
+                                    pasta_clinicdata = path.join(path.expanduser("~\Documents\\Planilhas - ClinicData"))
+                                    pasta_clinicdata_existe = path.exists(pasta_clinicdata)#Verifica se a pasta existe
+                                if pasta_clinicdata_existe == False:
+                                    mkdir(pasta_clinicdata)#Caso a pasta não exista, cria a pasta
+                                    
+                                if listdir(pasta_clinicdata) == [] or "pacientes.xlsx" not in listdir(pasta_clinicdata):
+                                    nome = "pacientes.xlsx"
+                                else:
+                                    numero = 1
+                                    for k in range(0,len(listdir(pasta_clinicdata))):
+                                        nome = str("pacientes" + "(" + str(numero) + ")" + ".xlsx")
+                                        if nome in listdir(pasta_clinicdata):
+                                            numero +=1
+                                planilha.save(pasta_clinicdata + "\\" + nome)#Salva a planilha na pasta
+                                self.label_9.setGeometry(QtCore.QRect(500, 200, 350, 31))
+                            else: #Para salvar nos outros sistemas
+                                planilha.save("pacientes.xlsx")#Salva a planilha na pasta
+                                self.label_9.setGeometry(QtCore.QRect(500, 200, 350, 31))
                         else:
-                            self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
                             self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
                             self.label_8.setGeometry(QtCore.QRect(500, 200, 350, 31))
                 except:
-                    self.label_7.setGeometry(QtCore.QRect(0, 0, 0, 0))
                     self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
                     self.label_8.setGeometry(QtCore.QRect(500, 200, 350, 31))
-            else:
-                self.label_8.setGeometry(QtCore.QRect(0, 0, 0, 0))
-                self.label_9.setGeometry(QtCore.QRect(0, 0, 0, 0))
-                self.label_7.setGeometry(QtCore.QRect(500, 200, 350, 31))
-            
+
+
         #Botão para baixar planilha
         self.pesquisar_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pesquisar_2.setGeometry(QtCore.QRect(770, 200, 51, 31))
