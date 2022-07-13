@@ -254,6 +254,8 @@ class Ui_ClinicData(object):
             self.textEdit.setText("")
             self.outra.setChecked(True)
             self.lineEdit.setStyleSheet("background-color: white; border-radius: 10px; color: black;")
+            self.lineEdit_4.setStyleSheet("background-color: white; border-radius: 10px; color: black;")
+            self.lineEdit_5.setStyleSheet("background-color: white; border-radius: 10px; color: black;")
             self.label_17.setGeometry(QtCore.QRect(0, 0, 0, 0))
             self.label_16.setGeometry(QtCore.QRect(0, 0, 0, 0))
 
