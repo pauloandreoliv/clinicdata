@@ -6,18 +6,18 @@ class Ui_Menu(object):
         
         #Define tamanho e propriedades
         Menu.setObjectName("Menu")
-        Menu.resize(220, 494)
+        Menu.resize(220, 520)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Maximum, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Menu.sizePolicy().hasHeightForWidth())
         Menu.setSizePolicy(sizePolicy)
         Menu.setMinimumSize(QtCore.QSize(220, 0))
-        Menu.setMaximumSize(QtCore.QSize(220, 500))
+        Menu.setMaximumSize(QtCore.QSize(220, 520))
         Menu.setStyleSheet("background-color:rgb(119, 162, 255);")
         Menu.setWindowTitle("Menu")
         self.centralwidget = QtWidgets.QWidget(Menu)
-        self.centralwidget.setMaximumSize(QtCore.QSize(220, 500))
+        self.centralwidget.setMaximumSize(QtCore.QSize(220, 520))
         self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
 
@@ -211,6 +211,28 @@ class Ui_Menu(object):
         self.item_7.setObjectName("item_7")
         self.item_7.setText("Ajustes")
         self.item_7.clicked.connect(sexto_item)
+
+        #Sétimo item do menu
+        def setimo_item():
+                from historico import Ui_ClinicData
+                self.clinicdata = QtWidgets.QMainWindow()
+                self.ClinicData = Ui_ClinicData()
+                self.ClinicData.setupUi(self.clinicdata)
+                self.clinicdata.show()
+                sleep(1)
+                Menu.hide()
+        #Histórico
+        self.item_8 = QtWidgets.QPushButton(self.centralwidget)
+        self.item_8.setGeometry(QtCore.QRect(40, 460, 141, 31))
+        font = QtGui.QFont()
+        font.setKerning(True)
+        self.item_8.setFont(font)
+        self.item_8.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.item_8.setMouseTracking(False)
+        self.item_8.setStyleSheet("background-color: white; border-radius: 10px;")
+        self.item_8.setObjectName("item_8")
+        self.item_8.setText("Histórico")
+        self.item_8.clicked.connect(setimo_item)
 
         
         Menu.setCentralWidget(self.centralwidget)
