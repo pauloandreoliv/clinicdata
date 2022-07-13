@@ -595,8 +595,9 @@ class Ui_ClinicData(object):
                                     folha.append(linha)#Adiciona a linha na tabela
                                     cont += 1
 
-                            from os import sep, path, mkdir, listdir
-                            if str(sep + " ") == str('\ '): #Para salvar caso seja Windows
+                            from os import path, mkdir, listdir
+                            import platform
+                            if str(platform.system()) == str("Windows"): #Para salvar caso seja Windows
                                 pasta = path.join(path.expanduser("~\Documents"))
                                 pasta_existe = path.exists(pasta)
                                 if pasta_existe == True:
